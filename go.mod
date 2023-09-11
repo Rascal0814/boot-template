@@ -1,4 +1,4 @@
-module hml
+module example/hml
 
 go 1.20
 

@@ -6,9 +6,9 @@
 package main
 
 import (
-	"hml/internal/conf"
-	"hml/internal/server"
-	"hml/internal/service"
+	"example/hml/internal/conf"
+	"example/hml/internal/server"
+	"example/hml/internal/service"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"

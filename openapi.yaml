@@ -22,10 +22,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/helloworld.v1.SayResponse'
+                                $ref: '#/components/schemas/v1.SayResponse'
 components:
     schemas:
-        helloworld.v1.SayResponse:
+        v1.SayResponse:
             type: object
             properties:
                 text:

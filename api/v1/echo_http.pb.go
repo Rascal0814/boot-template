@@ -19,7 +19,7 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
-const OperationEchoServiceSay = "/helloworld.v1.EchoService/Say"
+const OperationEchoServiceSay = "/v1.EchoService/Say"
 
 type EchoServiceHTTPServer interface {
 	Say(context.Context, *SayRequest) (*SayResponse, error)

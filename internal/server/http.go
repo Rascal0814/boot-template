@@ -1,12 +1,12 @@
 package server
 
 import (
+	v1 "example/hml/api/v1"
+	"example/hml/internal/conf"
+	"example/hml/internal/service"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	v1 "hml/api/v1"
-	"hml/internal/conf"
-	"hml/internal/service"
 )
 
 // NewHTTPServer new an HTTP server.

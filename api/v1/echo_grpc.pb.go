@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	EchoService_Say_FullMethodName = "/helloworld.v1.EchoService/Say"
+	EchoService_Say_FullMethodName = "/v1.EchoService/Say"
 )
 
 // EchoServiceClient is the client API for EchoService service.
@@ -46,15 +46,13 @@ func (c *echoServiceClient) Say(ctx context.Context, in *SayRequest, opts ...grp
 	return out, nil
 }
 
-type (
-	// EchoServiceServer is the server API for EchoService service.
-	// All implementations must embed UnimplementedEchoServiceServer
-	// for forward compatibility
-	EchoServiceServer interface {
-		Say(context.Context, *SayRequest) (*SayResponse, error)
-		mustEmbedUnimplementedEchoServiceServer()
-	}
-)
+// EchoServiceServer is the server API for EchoService service.
+// All implementations must embed UnimplementedEchoServiceServer
+// for forward compatibility
+type EchoServiceServer interface {
+	Say(context.Context, *SayRequest) (*SayResponse, error)
+	mustEmbedUnimplementedEchoServiceServer()
+}
 
 // UnimplementedEchoServiceServer must be embedded to have forward compatible implementations.
 type UnimplementedEchoServiceServer struct {
@@ -98,7 +96,7 @@ func _EchoService_Say_Handler(srv interface{}, ctx context.Context, dec func(int
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var EchoService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "helloworld.v1.EchoService",
+	ServiceName: "v1.EchoService",
 	HandlerType: (*EchoServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

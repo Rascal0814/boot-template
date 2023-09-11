@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	v1 "hml/api/v1"
+	v1 "example/hml/api/v1"
 )
 
 type EchoService struct {
