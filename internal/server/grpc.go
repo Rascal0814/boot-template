@@ -4,18 +4,14 @@ import (
 	v1 "example/hml/api/v1"
 	"example/hml/internal/conf"
 	"example/hml/internal/service"
+	kratosmiddleware "github.com/Rascal0814/boot/kratos/pkg/middleware"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 )
 
 // NewGRPCServer new a gRPC server.
 func NewGRPCServer(c *conf.Server, echo *service.EchoService, logger log.Logger) *grpc.Server {
-	var opts = []grpc.ServerOption{
-		grpc.Middleware(
-			recovery.Recovery(),
-		),
-	}
+	var opts = kratosmiddleware.DefaultGrpcMiddleWare
 	if c.Grpc.Network != "" {
 		opts = append(opts, grpc.Network(c.Grpc.Network))
 	}

@@ -4,18 +4,14 @@ import (
 	v1 "example/hml/api/v1"
 	"example/hml/internal/conf"
 	"example/hml/internal/service"
+	kratosmiddleware "github.com/Rascal0814/boot/kratos/pkg/middleware"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/http"
 )
 
 // NewHTTPServer new an HTTP server.
 func NewHTTPServer(c *conf.Server, echo *service.EchoService, logger log.Logger) *http.Server {
-	var opts = []http.ServerOption{
-		http.Middleware(
-			recovery.Recovery(),
-		),
-	}
+	var opts = kratosmiddleware.DefaultHttpMiddleWare
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))
 	}
