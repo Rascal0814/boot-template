@@ -6,7 +6,7 @@
 package main
 
 import (
-	"example/hml/internal/conf"
+	"example/hml/config"
 	"example/hml/internal/server"
 	"example/hml/internal/service"
 
@@ -16,6 +16,6 @@ import (
 )
 
 // wireApp init kratos application.
-func wireApp(*conf.Server, *conf.Data, log.Logger) (*kratos.App, func(), error) {
-	panic(wire.Build(server.ProviderSet, service.ProviderSet, newApp))
+func wireApp(log.Logger) (*kratos.App, func(), error) {
+	panic(wire.Build(server.ProviderSet, service.ProviderSet, config.ProviderSet, newApp))
 }
