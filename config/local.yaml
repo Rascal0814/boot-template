@@ -13,6 +13,6 @@ data:
     addr: redis:6379
     read_timeout: 1s
     write_timeout: 2s
-  consul:
-    address: consul:8500
-    scheme: http
+#  consul:
+#    address: consul:8500
+#    scheme: http

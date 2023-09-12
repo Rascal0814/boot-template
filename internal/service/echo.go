@@ -13,6 +13,6 @@ func (s EchoService) Say(ctx context.Context, resp *v1.SayRequest) (*v1.SayRespo
 	return &v1.SayResponse{Text: "hello world " + resp.Text}, nil
 }
 
-func NewEchoService() *EchoService {
-	return &EchoService{}
+func NewEchoService() (*EchoService, error) {
+	return &EchoService{}, nil
 }

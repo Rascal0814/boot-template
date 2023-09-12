@@ -26,30 +26,10 @@ init:
 	go install github.com/envoyproxy/protoc-gen-validate@latest
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
-.PHONY: config
-
 # generate api proto
+.PHONY: api
 api:
 	buf mod update && buf generate
-
-.PHONY: build
-# build
-build:
-	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
-
-.PHONY: generate
-# generate
-generate:
-	go mod tidy
-	go get github.com/google/wire/cmd/wire@latest
-	go generate ./...
-
-.PHONY: all
-# generate all
-all:
-	make api;
-	make config;
-	make generate;
 
 # show help
 help:

@@ -9,13 +9,20 @@ import (
 	"example/hml/config"
 	"example/hml/internal/server"
 	"example/hml/internal/service"
+	"github.com/Rascal0814/boot/kratos/depend"
 
+	"github.com/Rascal0814/boot/kratos/log"
 	"github.com/go-kratos/kratos/v2"
-	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 )
 
 // wireApp init kratos application.
-func wireApp(log.Logger) (*kratos.App, func(), error) {
-	panic(wire.Build(server.ProviderSet, service.ProviderSet, config.ProviderSet, newApp))
+func wireApp() (*kratos.App, func(), error) {
+	panic(wire.Build(
+		log.ProvideLogger,
+		depend.NewConsulRegistrar,
+		server.ProviderSet,
+		service.ProviderSet,
+		config.ProviderSet,
+		newApp))
 }

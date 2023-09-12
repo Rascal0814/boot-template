@@ -1,12 +1,11 @@
 package main
 
 import (
-	"flag"
+	"github.com/go-kratos/kratos/v2/registry"
 	"os"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 
@@ -16,18 +15,11 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name string
-	// flagConf is the config flag.
-	flagConf string
-
+	Name  string
 	id, _ = os.Hostname()
 )
 
-func init() {
-	flag.StringVar(&flagConf, "conf", "configs", "config path, eg: -conf config.yaml")
-}
-
-func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
+func newApp(logger log.Logger, r registry.Registrar, gs *grpc.Server, hs *http.Server) (*kratos.App, error) {
 	return kratos.New(
 		kratos.ID(id),
 		kratos.Name(Name),
@@ -37,25 +29,16 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 			gs,
 			hs,
 		),
-	)
+		kratos.Registrar(r),
+	), nil
 }
 
 func main() {
-	flag.Parse()
-	logger := log.With(log.NewStdLogger(os.Stdout),
-		"ts", log.DefaultTimestamp,
-		"caller", log.DefaultCaller,
-		"service.id", id,
-		"service.name", Name,
-		"trace.id", tracing.TraceID(),
-		"span.id", tracing.SpanID(),
-	)
-
-	app, cleanup, err := wireApp(bc.Server, bc.Data, logger)
+	app, cleanup, err := wireApp()
 	if err != nil {
 		panic(err)
 	}
-	defer cleanup()
+	defer func() { cleanup() }()
 
 	// start and wait for stop signal
 	if err := app.Run(); err != nil {

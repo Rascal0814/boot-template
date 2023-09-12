@@ -2,15 +2,16 @@ package server
 
 import (
 	v1 "example/hml/api/v1"
-	"example/hml/config"
 	"example/hml/internal/service"
-	kratosmiddleware "github.com/Rascal0814/boot/kratos/pkg/middleware"
+
+	"github.com/Rascal0814/boot/config"
+	kratosmiddleware "github.com/Rascal0814/boot/kratos/middleware"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *config.Server, echo *service.EchoService, logger log.Logger) *grpc.Server {
+func NewGRPCServer(c *config.Server, echo *service.EchoService, logger log.Logger) (*grpc.Server, error) {
 	var opts = kratosmiddleware.DefaultGrpcMiddleWare
 	if c.Grpc.Addr != "" {
 		opts = append(opts, grpc.Address(c.Grpc.Addr))
@@ -20,5 +21,5 @@ func NewGRPCServer(c *config.Server, echo *service.EchoService, logger log.Logge
 	}
 	srv := grpc.NewServer(opts...)
 	v1.RegisterEchoServiceServer(srv, echo)
-	return srv
+	return srv, nil
 }
